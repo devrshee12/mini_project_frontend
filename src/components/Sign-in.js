@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import  validator  from 'validator';
 import {
   MDBContainer,
   MDBTabs,
@@ -22,6 +23,9 @@ import axios from "axios";
 
 function SignIn() {
   const {type, name, email, number, password, setName, setEmail, setNumber, setPassword} = useUserContext();
+  const [emailError,setEmailError]=useState();
+  const [numberError,setNumberError]=useState();
+  const [passwordError,setPasswordError]=useState();
   const navigate = useNavigate();
   const [justifyActive, setJustifyActive] = useState('tab1');
 
@@ -150,16 +154,44 @@ function SignIn() {
           </div> */}
 
           <MDBInput wrapperClass='mb-4' label='Name' id='form1' type='text' value={name} onChange={(e) => {setName(e.target.value)}}/>
-          <MDBInput wrapperClass='mb-4' label='Number' id='form1' type='number' value={number} onChange={(e) => {setNumber(e.target.value)}}/>
-          <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' value={email} onChange={(e) => {setEmail(e.target.value)}}/>
-          <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' value={password} onChange={(e) => {setPassword(e.target.value)}}/>
+          <span className={numberError=="Phone Number Valid"?"text-success":"text-danger"}>{numberError}</span>
+          <MDBInput wrapperClass='mb-4' label='Number' id='form1' type='number' value={number} onChange={(e) => {
+            setNumber(e.target.value)
+            if(e.target.value.length==10)
+            {
+              setNumberError("Phone Number Valid")
+            }
+            else{
+              setNumberError("Number should have 10 digit")
+            }
+            }}/>
+          <span className={emailError=="Valid Email"?"text-success":"text-danger"}>{emailError}</span>
+          <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' value={email} onChange={(e) => {
+            setEmail(e.target.value)
+            if(validator.isEmail(e.target.value)){
+              setEmailError("Valid Email");
+            }else{
+              // console.log("hell")
+              setEmailError("Invalid Email");
+            }
+          }}/>
+          <span className={passwordError=="Strong Password"?"text-success":"text-danger"}>{passwordError}</span>
+          <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' value={password} onChange={(e) => {
+            setPassword(e.target.value)
+            if(validator.isStrongPassword(e.target.value)){
+              setPasswordError("Strong Password")
+
+            }else{
+              setPasswordError("Weak Password")
+            }
+            }}/>
           
 
           {/* <div className='d-flex justify-content-center mb-4'>
             <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
           </div> */}
 
-          <MDBBtn className="mb-4 w-100" onClick={handleClick}>Sign up</MDBBtn>
+          <MDBBtn className="mb-4 w-100 btn" disabled={(emailError=="Valid Email" && passwordError=="Strong Password")?false:true} onClick={handleClick}>Sign up</MDBBtn>
 
         </MDBTabsPane>
 
