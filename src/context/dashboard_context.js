@@ -23,6 +23,8 @@ import {
   SET_KANBAN_DATA,
   HANDLE_EDIT_KANBAN,
   HANDLE_EDIT_TASK,
+  HANDLE_MEMBER_PROJECT_TASK,
+  HANDLE_MEMBER_TASK_FLAG,
 } from "../action";
 
 const initialState = {
@@ -49,6 +51,8 @@ const initialState = {
   kanbanBoardFlag: false,
   handleEditKanbanFlag: false,
   handleEditTaskFlag: false,
+  memberProjectListFlag: true,
+  memberTaskFlag: false
 };
 
 const DashboardContext = React.createContext();
@@ -126,6 +130,14 @@ export const DashboradProvider = ({ children }) => {
     dispath({type: SET_KANBAN_DATA, payload: val})
   }
 
+  const handleMemberProjectTask = (val) => {
+    dispath({type: HANDLE_MEMBER_PROJECT_TASK, payload: val});
+  }
+
+
+  const handleMemberTaskFlag = () => {
+    dispath({type: HANDLE_MEMBER_TASK_FLAG});
+  }
   
   
 
@@ -152,7 +164,9 @@ export const DashboradProvider = ({ children }) => {
         handleKanbanBoardFlag,
         setKanbanData,
         handleEditKanban,
-        handleEditTask
+        handleEditTask,
+        handleMemberProjectTask,
+        handleMemberTaskFlag
       }}
     >
       {children}

@@ -15,6 +15,8 @@ import EditMember from "../editMember/EditMember";
 import KanbanBoard from "../kanbanBoard/KanbanBoard";
 import EditKanban from "../editKanban/EditKaban";
 import EditTask from "../editTask/EditTask";
+import MemberProjectList from "../memberProjectList/MemberProjectList";
+import MemberTask from "../memberTask/MemberTask";
 
 const CreatorDashboard = () => {
   const {
@@ -28,7 +30,7 @@ const CreatorDashboard = () => {
     editMemberFlag,
     kanbanBoardFlag,
     email,
-    projects, 
+    projects,
     members,
     selectedTasks,
     setProjects,
@@ -36,9 +38,11 @@ const CreatorDashboard = () => {
     setSelectedTask,
     handleEditKanbanFlag,
     handleEditTaskFlag,
+    memberProjectListFlag,
+    memberTaskFlag
   } = useDashboradContext();
 
-  const [tempProjects, setTempProjects] = useState([]);
+  // const [tempProjects, setTempProjects] = useState([]);
   // var tempProjects
   // var tempMembers
   // var tempSelectedTasks
@@ -88,7 +92,7 @@ const CreatorDashboard = () => {
 
   // useEffect(() => {
   //   setTempProjects(projects);
-    
+
   // }, [])
 
   return (
@@ -130,7 +134,9 @@ const CreatorDashboard = () => {
           <EditKanban />
         ) : handleEditTaskFlag ? (
           <EditTask />
-        ) : (
+        ) : memberProjectListFlag ? (
+          <MemberProjectList />
+        ) : (memberTaskFlag ? <MemberTask/>:
           <ProjectList />
         )}
       </div>

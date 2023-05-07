@@ -10,10 +10,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import {auth, provider} from "../../config"
 import { signInWithPopup } from "firebase/auth";
+import { useDashboradContext } from "../../context/dashboard_context";
 const SignIn = () => {
   const navigate = useNavigate();
 
   const{type,setType,email,setEmail,password,setPassword}=useUserContext()
+  const {handleMemberProjectTask} = useDashboradContext();
   const [emailError,setEmailError]=useState();
   const [passwordError,setPasswordError]=useState();
 
@@ -50,8 +52,14 @@ const SignIn = () => {
             console.log("data", data);
             console.log(response);
             
-
-            navigate("/dashboard");
+              if(type === "member"){
+                handleMemberProjectTask(true);
+              }
+              else{
+                handleMemberProjectTask(false);
+              }
+              navigate("/dashboard");
+            
             
 
           }, (error) => {

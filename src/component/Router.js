@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import Main from "../pages/Main";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Test from "./Test";
+import MemberProjectList from "./memberProjectList/MemberProjectList";
 
 
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     path: "/test",
     element: <Test/>
   },
+  {
+    path:"/memberDashboard",
+    element: <MemberProjectList/>
+  }
   
 
   

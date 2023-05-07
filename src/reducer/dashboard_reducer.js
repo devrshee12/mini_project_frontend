@@ -1,4 +1,4 @@
-import {DASHBOARD_EMAIL_CHANGE, DASHBOARD_NAME_CHANGE, DASHBOARD_PROJECT_CHANGE, HANDLE_CLOSE_CREATE_MEMBER, HANDLE_CLOSE_CREATE_PROJECT, HANDLE_DISPLAY_MEMBER, CHANGE_PROJECT_ID, SET_MEMBERS, ADD_TASK_FLAG, CHANGE_MEMBER_ID, HANDLE_CLOSE_DISPLAY_TASK, HANDLE_CLOSE_ASSIGN_TASK_FLAG, SET_SELECTED_TASK, HANDLE_EDIT_PROJECT_FLAG, HANDLE_EDIT_MEMBER_FLAG, CHANGE_TASK_ID, HANDLE_KANBAN_BOARD_FLAG, CREATE_KANBAN_DATA, UPDATE_KANBAN_DATA, SET_KANBAN_DATA, HANDLE_EDIT_KANBAN, HANDLE_EDIT_TASK} from "../action"
+import {DASHBOARD_EMAIL_CHANGE, DASHBOARD_NAME_CHANGE, DASHBOARD_PROJECT_CHANGE, HANDLE_CLOSE_CREATE_MEMBER, HANDLE_CLOSE_CREATE_PROJECT, HANDLE_DISPLAY_MEMBER, CHANGE_PROJECT_ID, SET_MEMBERS, ADD_TASK_FLAG, CHANGE_MEMBER_ID, HANDLE_CLOSE_DISPLAY_TASK, HANDLE_CLOSE_ASSIGN_TASK_FLAG, SET_SELECTED_TASK, HANDLE_EDIT_PROJECT_FLAG, HANDLE_EDIT_MEMBER_FLAG, CHANGE_TASK_ID, HANDLE_KANBAN_BOARD_FLAG, CREATE_KANBAN_DATA, UPDATE_KANBAN_DATA, SET_KANBAN_DATA, HANDLE_EDIT_KANBAN, HANDLE_EDIT_TASK, HANDLE_MEMBER_PROJECT_TASK, HANDLE_MEMBER_TASK_FLAG} from "../action"
 
 
 
@@ -84,15 +84,30 @@ const dashboard_reducer = (state, action) => {
     }
     if(action.type === HANDLE_EDIT_KANBAN){
         if(state.handleEditKanbanFlag){
-            return {...state, kanbanBoardFlag: true, handleEditKanbanFlag: !state.handleEditKanbanFlag}
+            return {...state, kanbanBoardFlag: true, handleEditKanbanFlag: !state.handleEditKanbanFlag, displayMemberFlag: false}
         }
-        return {...state, handleEditKanbanFlag: !state.handleEditKanbanFlag, kanbanBoardFlag: false}
+        return {...state, handleEditKanbanFlag: !state.handleEditKanbanFlag, kanbanBoardFlag: false, displayMemberFlag: false}
     }
     if(action.type === HANDLE_EDIT_TASK){
         if(state.handleEditTaskFlag){
-            return {...state, handleEditTaskFlag: !state.handleEditTaskFlag, displayTaskFlag: true}
+            return {...state, handleEditTaskFlag: !state.handleEditTaskFlag, displayTaskFlag: true, displayMemberFlag: false}
         }
-        return {...state, handleEditTaskFlag: !state.handleEditTaskFlag, displayTaskFlag: false}
+        return {...state, handleEditTaskFlag: !state.handleEditTaskFlag, displayTaskFlag: false, displayMemberFlag: false}
+    }
+
+    if(action.type === HANDLE_MEMBER_PROJECT_TASK){
+        
+        return {...state, memberProjectListFlag: action.payload, displayTaskFlag: false};
+    }
+
+
+    if(action.type === HANDLE_MEMBER_TASK_FLAG){
+        console.log("handle memeber task flag")
+        console.log("herherherhehrewhrkhsgkfusaebkjfgsekfuadkulfglksdhfkashfkdhgoui");
+        if(state.memberTaskFlag){
+            return {...state, memberTaskFlag: !state.memberTaskFlag, memberProjectListFlag: true, displayMemberFlag: false}
+        }
+        return {...state, memberTaskFlag: !state.memberTaskFlag, memberProjectListFlag: false, displayMemberFlag: false}
     }
 
 
